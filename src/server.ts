@@ -1,3 +1,5 @@
+import { authController } from './modules/auth/controller';
+
 import Fastify from 'fastify'
 import {
     serializerCompiler,
@@ -22,6 +24,7 @@ await app.register(swaggerUi, {
     routePrefix: '/docs'
 })
 
+await app.register(authController, { prefix: '/auth' });
 app.get('/health', async () => ({ status: 'ok' }))
 
 app.listen({ port: 3001 }, (err) => {
