@@ -1,7 +1,7 @@
 import type { FastifyInstance } from 'fastify';
-import { signupSchema, loginSchema } from './schema';
+import { signupSchema, loginSchema } from './schema.js';
 import { z } from 'zod';
-import { authService } from './service';
+import { authService } from './service.js';
 
 export async function authController(app: FastifyInstance) {
     app.post('/signup', { schema: { body: signupSchema } }, async (req, reply) => {

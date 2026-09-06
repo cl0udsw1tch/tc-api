@@ -16,3 +16,5 @@ export async function requireAuth(req: FastifyRequest, reply: FastifyReply) {
         return reply.status(401).send({ error: 'Invalid or expired token' });
     }
 }
+
+

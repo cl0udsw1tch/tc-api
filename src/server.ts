@@ -1,4 +1,6 @@
-import { authController } from './modules/auth/controller';
+import { authController } from './modules/auth/controller.js';
+import { articlesController } from './modules/articles/controller.js';
+
 
 import Fastify from 'fastify'
 import {
