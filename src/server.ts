@@ -30,6 +30,8 @@ await app.register(swaggerUi, {
 
 await app.register(authController, { prefix: '/auth' });
 app.get('/health', async () => ({ status: 'ok' }))
+await app.register(articlesController, { prefix: '/articles' });
+
 
 app.listen({ port: 3001 }, (err) => {
     if (err) {

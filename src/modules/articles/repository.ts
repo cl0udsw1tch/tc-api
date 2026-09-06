@@ -17,4 +17,8 @@ export const articlesRepository = {
     delete(id: string) {
         return prisma.article.delete({ where: { id } });
     },
+    // repository.ts
+    setStatus(id: string, status: 'pending' | 'rendered' | 'failed') {
+        return prisma.article.update({ where: { id }, data: { status } });
+    },
 };

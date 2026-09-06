@@ -18,12 +18,28 @@ export const articlesService = {
         await triggerRender(article.id);
         return article;
     },
+    async rerender(id: string) {
+        await articlesRepository.setStatus(id, 'pending');
+        await triggerRender(id);
+    },
     listForUser: articlesRepository.findAllByUser,
     getById: articlesRepository.findById,
     deleteArticle: articlesRepository.delete,
 };
 
 async function triggerRender(articleId: string) {
+    if (env.NODE_ENV !== 'production') {
+        if (!env.DEV_RENDER_URL) {
+            throw new Error('DEV_RENDER_URL must be set when NODE_ENV is not production');
+        }
+
+        await fetch(env.DEV_RENDER_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ articleId }),
+        });
+        return;
+    }
     await lambda.send(new InvokeCommand({
         FunctionName: process.env.RENDER_LAMBDA_NAME,
         InvocationType: 'Event',

@@ -36,6 +36,12 @@ export async function articlesController(app: FastifyInstance) {
         await articlesService.deleteArticle(article.id);
         return reply.status(204).send();
     });
+    app.post('/:id/render', async (req, reply) => {
+        const article = await getOwnedArticle(req, reply);
+        if (!article) return reply;
+        await articlesService.rerender(article.id);
+        return reply.status(202).send({ status: 'pending' });
+    });
 }
 
 async function getOwnedArticle(req: any, reply: any) {
