@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export async function requireAuth(req: FastifyRequest, reply: FastifyReply) {
+
     const header = req.headers.authorization;
     if (!header?.startsWith('Bearer ')) {
         return reply.status(401).send({ error: 'Missing token' });

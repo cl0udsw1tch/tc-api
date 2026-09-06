@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { authController } from './modules/auth/controller.js';
 import { articlesController } from './modules/articles/controller.js';
 
@@ -14,7 +15,8 @@ import swagger from '@fastify/swagger'
 import swaggerUi from '@fastify/swagger-ui'
 
 const app = Fastify({ logger: true }).withTypeProvider<ZodTypeProvider>()
-
+app.setValidatorCompiler(validatorCompiler)
+app.setSerializerCompiler(serializerCompiler)
 await app.register(swagger, {
     openapi: {
         info: { title: 'tc-api', version: '0.1.0' },
