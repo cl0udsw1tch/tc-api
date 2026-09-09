@@ -30,7 +30,7 @@ export const articlesService = {
 async function triggerRender(articleId: string) {
 
     await lambda.send(new InvokeCommand({
-        FunctionName: process.env.LAMBDA_RENDER_NAME,
+        FunctionName: env.LAMBDA_RENDER_NAME,
         InvocationType: 'Event',
         Payload: Buffer.from(JSON.stringify({ articleId })),
     }));
