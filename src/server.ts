@@ -1,6 +1,6 @@
 import { authController } from './modules/auth/controller.js';
 import { articlesController } from './modules/articles/controller.js';
-
+import { env } from './env.js';
 
 import Fastify from 'fastify'
 import {
@@ -39,7 +39,7 @@ export function buildApp() {
 
 if (import.meta.url == `file://${process.argv[1]}`) {
     const app = buildApp()
-    app.listen({ port: 3001 }, (err: Error | null) => {
+    app.listen({ port: env.TC_API_PORT }, (err: Error | null) => {
         if (err) {
             app.log.error(err);
             process.exit(1)

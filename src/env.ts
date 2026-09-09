@@ -6,8 +6,7 @@ const envSchema = z.object({
     JWT_SECRET: z.string(),
     DATABASE_URL: z.string(),
     NODE_ENV: z.string(),
-    TC_RENDER_URL: z.string().optional(),
-    TC_RENDER: false,
+    TC_API_PORT: z.coerce.number().int(),
 });
 
 export const env = envSchema.parse(process.env);
