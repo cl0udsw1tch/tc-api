@@ -2,7 +2,9 @@ import { describe, it, expect, vi } from 'vitest';
 import { buildApp } from '../src/server';
 
 vi.mock('@aws-sdk/client-lambda', () => ({
-    LambdaClient: vi.fn().mockImplementation(() => ({ send: vi.fn().mockResolvedValue({}) })),
+    LambdaClient: vi.fn().mockImplementation(function() {
+        return { send: vi.fn().mockResolvedValue({}) };
+    }),
     InvokeCommand: vi.fn().mockResolvedValue({}),
 }));
 global.fetch = vi.fn().mockResolvedValue({ ok: true }) as any;
@@ -11,7 +13,7 @@ async function getToken(app: ReturnType<typeof buildApp>, email: string) {
     const res = await app.inject({
         method: 'POST',
         url: '/auth/signup',
-        payload: { email, password: 'password123' }
+        payload: { email: email, password: 'password123' }
     });
     return JSON.parse(res.body).token as string;
 }

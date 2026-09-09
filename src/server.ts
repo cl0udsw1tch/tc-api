@@ -39,7 +39,7 @@ export function buildApp() {
 
 if (import.meta.url == `file://${process.argv[1]}`) {
     const app = buildApp()
-    app.listen({ port: env.TC_API_PORT }, (err: Error | null) => {
+    app.listen({ port: env.TC_API_PORT, host: '0.0.0.0' }, (err: Error | null) => {
         if (err) {
             app.log.error(err);
             process.exit(1)

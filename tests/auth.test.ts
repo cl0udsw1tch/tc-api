@@ -3,13 +3,9 @@ import { buildApp } from '../src/server';
 
 describe('auth', () => {
 
-    let app: ReturnType<typeof buildApp>;
-
-    beforeAll(() => {
-        app = buildApp();
-    });
-
     it('signs up a new user and returns a token', async () => {
+        const app = buildApp();
+
         const res = await app.inject({
             method: 'POST',
             url: '/auth/signup',
@@ -20,6 +16,8 @@ describe('auth', () => {
     });
 
     it('rejects duplicate signups with 409', async () => {
+        const app = buildApp();
+
         await app.inject({
             method: 'POST',
             url: '/auth/signup',
@@ -35,6 +33,8 @@ describe('auth', () => {
     });
 
     it('logs in with correct credentials', async () => {
+        const app = buildApp();
+
         await app.inject({
             method: 'POST',
             url: '/auth/signup',
@@ -50,6 +50,8 @@ describe('auth', () => {
     });
 
     it('rejects a wrong password with 401', async () => {
+        const app = buildApp();
+
         await app.inject({
             method: 'POST',
             url: '/auth/signup',

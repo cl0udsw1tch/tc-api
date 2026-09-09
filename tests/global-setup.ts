@@ -14,5 +14,9 @@ export default async function setup() {
     const exists = await client.query(`SELECT 1 FROM pg_database WHERE datname = '${POSTGRES_DB}'`);
     if (exists.rowCount === 0) {
         await client.query(`CREATE DATABASE ${POSTGRES_DB}`);
-    } await client.end();
+        console.log("CREATING TEST DB")
+    } else {
+        console.log("TEST DB EXISTS")
+    }
+    await client.end();
 }
