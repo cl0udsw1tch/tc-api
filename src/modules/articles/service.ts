@@ -28,12 +28,8 @@ export const articlesService = {
 };
 
 async function triggerRender(articleId: string) {
-    if (env.NODE_ENV !== 'production') {
-        if (!env.DEV_RENDER_URL) {
-            throw new Error('DEV_RENDER_URL must be set when NODE_ENV is not production');
-        }
-
-        await fetch(env.DEV_RENDER_URL, {
+    if (env.TC_RENDER == true) {
+        await fetch(env.TC_RENDER_URL!, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ articleId }),
@@ -41,7 +37,7 @@ async function triggerRender(articleId: string) {
         return;
     }
     await lambda.send(new InvokeCommand({
-        FunctionName: process.env.RENDER_LAMBDA_NAME,
+        FunctionName: process.env.LAMBDA_RENDER_NAME,
         InvocationType: 'Event',
         Payload: Buffer.from(JSON.stringify({ articleId })),
     }));
