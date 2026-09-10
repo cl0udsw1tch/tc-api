@@ -9,6 +9,12 @@ const lambda = new LambdaClient({ region: env.AWS_REGION });
 
 export const articlesService = {
     async createArticle(userId: string, input: CreateArticleInput) {
+        const existing = await articlesRepository.findBySlug(input.slug);
+        if (existing) {
+            const err: any = new Error('Slug already in use');
+            err.statusCode = 409;
+            throw err;
+        }
         const article = await articlesRepository.create(userId, input);
         await triggerRender(article.id);
         return article;

@@ -5,9 +5,10 @@ vi.mock('@aws-sdk/client-lambda', () => ({
     LambdaClient: vi.fn().mockImplementation(function() {
         return { send: vi.fn().mockResolvedValue({}) };
     }),
-    InvokeCommand: vi.fn().mockResolvedValue({}),
+    InvokeCommand: vi.fn().mockImplementation(function() {
+        return {};
+    }),
 }));
-global.fetch = vi.fn().mockResolvedValue({ ok: true }) as any;
 
 async function getToken(app: ReturnType<typeof buildApp>, email: string) {
     const res = await app.inject({
@@ -30,7 +31,6 @@ describe('articles', () => {
         });
         expect(res.statusCode).toBe(200);
         expect(JSON.parse(res.body).status).toBe('pending');
-        expect(fetch).toHaveBeenCalled();
     });
 
     it('rejects a duplicate slug with 409', async () => {

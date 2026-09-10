@@ -27,7 +27,7 @@ describe('auth', () => {
         const res = await app.inject({
             method: 'POST',
             url: '/auth/signup',
-            payload: { email: 'test@example.com', password: 'password123' }
+            payload: { email: 'dup@example.com', password: 'password123' }
         });
         expect(res.statusCode).toBe(409);
     });
@@ -44,7 +44,7 @@ describe('auth', () => {
         const res = await app.inject({
             method: 'POST',
             url: '/auth/login',
-            payload: { email: 'test@example.com', password: 'password123' }
+            payload: { email: 'login@example.com', password: 'password123' }
         });
         expect(res.statusCode).toBe(200);
     });
@@ -61,7 +61,7 @@ describe('auth', () => {
         const res = await app.inject({
             method: 'POST',
             url: '/auth/login',
-            payload: { email: 'test@example.com', password: 'wrongpass' }
+            payload: { email: 'bad@example.com', password: 'wrongpass' }
         });
         expect(res.statusCode).toBe(401);
     });

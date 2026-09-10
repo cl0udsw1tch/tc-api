@@ -11,6 +11,9 @@ export const articlesRepository = {
     findById(id: string) {
         return prisma.article.findUnique({ where: { id } });
     },
+    findBySlug(slug: string) {
+        return prisma.article.findUnique({ where: { slug } });
+    },
     update(id: string, data: UpdateArticleInput) {
         return prisma.article.update({ where: { id }, data });
     },
